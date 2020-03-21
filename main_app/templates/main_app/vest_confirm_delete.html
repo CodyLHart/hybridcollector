@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Delete Vest</h1>
+
+  <h4>Are you sure you want to delete the <span class="teal-text">{{ object.vest_type }} </span>vest?</h4>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes - Delete!" class="btn">
+    <a href="{% url 'vests_detail' object.id %}">Cancel</a>
+  </form>
+{% endblock %}

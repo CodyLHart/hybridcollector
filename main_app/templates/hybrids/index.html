@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Hybrid List</h1>
+
+{% for hybrid in hybrids %}
+  <div class="card">
+    <a href="{% url 'detail' hybrid.id %}">
+      <div class="card-content">
+        <span class="card-title">{{ hybrid.name }}</span>
+        <p>Animal: {{ hybrid.animal }}</p>
+        <p>Produce: {{ hybrid.produce }}</p>
+        <p>Number of Legs: {{ hybrid.num_legs }}</p>
+      </div>
+    </a>
+  </div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Hybrid Details</h1>
+
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ hybrid.name }}</span>
+        <p>Animal: {{ hybrid.animal }}</p>
+        <p>Produce: {{ hybrid.produce }}</p>
+        <p>Number of Legs: {{ hybrid.num_legs }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'hybrids_update' hybrid.id %}">Edit</a>
+        <a href="{% url 'hybrids_delete' hybrid.id %}">Delete</a>
+      </div>
+    </div>
+    {% for photo in hybrid.photo_set.all %}
+      <img src="{{ photo.url }}" class="responsive-img card-panel">
+    {% empty %}
+      <div class="card-panel teal-text center-allign">No Photos Uploaded</div>
+    {% endfor %}
+    <form action="{% url 'add_photo' hybrid.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+      {% csrf_token %}
+      <input type="file" name="photo-file">
+      <br><br>
+      <input type="submit" class="btn" value="Upload Photo">
+    </form>
+  </div>
+  <div class="col s6">
+    <form action="{% url 'add_appointment' hybrid.id %}" method="POST">
+        {% csrf_token %}
+        {{ appointment_form.as_p }}
+        <input type="submit" class="btn" value="Add Appointment">
+    </form>
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Appointment</th></tr>
+      </thead>
+      <tbody>
+        {% for appointment in hybrid.appointment_set.all %}
+          <tr>
+            <td>{{appointment.date}}</td>
+            <td>{{appointment.get_appt_type_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ hybrid.name }}'s Vests</h3>
+    {% if hybrid.vests.count %}
+      {% for vest in hybrid.vests.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A <span style="color: {{ vest.color }}">{{ vest.color }}</span> {{ vest.vest_type }} Vest
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'unassoc_vest' hybrid.id vest.id %}" method="post">
+                {% csrf_token %}
+              <button type="submit" class="btn">Remove</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{hybrid.name}} Has No Vests</h5>
+    {% endif %}
+  </div>
+
+  <div class="col s6">
+    <h3>Available Vests</h3>
+    {% if vests.count %}
+      {% for vest in vests.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A <span style="color: {{ vest.color }}">{{ vest.color }}</span> {{ vest.vest_type }} Vest
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'assoc_vest' hybrid.id vest.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{hybrid.name}} Already Has All Available Vests</h5>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+    var dateEl = document.getElementById('id_date');
+    M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+    });
+
+    var selectEl = document.getElementById('id_appt_type');
+    M.FormSelect.init(selectEl);
+</script>
+{% endblock %}

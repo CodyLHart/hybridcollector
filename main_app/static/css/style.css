@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto
+}
+
+footer.page-footer {
+    padding-top: 0;
+    text-align: right;
+    background-color: #303030;
+    color: #00AAAA
+}
+
+.nav-wrapper, a.left.brand-logo {
+    background-color: #303030;
+    color: #00AAAA;
+}
+
+.navbar-fixed, .nav-wrapper {
+    background-color: #303030;
+}
+
