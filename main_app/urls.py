@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('hybrids/', views.hybrids_index, name='index'),
+    path('hybrids/all', views.hybrids_index_all, name='index_all'),
     path('hybrids/<int:hybrid_id>/', views.hybrids_detail, name='detail'),
     path('hybrids/create/', views.HybridCreate.as_view(), name='hybrids_create'),
     path('hybrids/<int:pk>/update/', views.HybridUpdate.as_view(), name='hybrids_update'),

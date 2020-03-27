@@ -12,22 +12,26 @@
         <p>Produce: {{ hybrid.produce }}</p>
         <p>Number of Legs: {{ hybrid.num_legs }}</p>
       </div>
-      <div class="card-action">
-        <a href="{% url 'hybrids_update' hybrid.id %}">Edit</a>
-        <a href="{% url 'hybrids_delete' hybrid.id %}">Delete</a>
-      </div>
+      {% if hybrid.user == request.user %}
+        <div class="card-action">
+          <a href="{% url 'hybrids_update' hybrid.id %}">Edit</a>
+          <a href="{% url 'hybrids_delete' hybrid.id %}">Delete</a>
+        </div>
+      {% endif %}
     </div>
     {% for photo in hybrid.photo_set.all %}
       <img src="{{ photo.url }}" class="responsive-img card-panel">
     {% empty %}
       <div class="card-panel teal-text center-allign">No Photos Uploaded</div>
     {% endfor %}
+    {% if hybrid.user == request.user %}
     <form action="{% url 'add_photo' hybrid.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
       {% csrf_token %}
       <input type="file" name="photo-file">
       <br><br>
       <input type="submit" class="btn" value="Upload Photo">
     </form>
+    {% endif %}
   </div>
   <div class="col s6">
     <form action="{% url 'add_appointment' hybrid.id %}" method="POST">

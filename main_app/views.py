@@ -25,6 +25,11 @@ def hybrids_index(request):
     return render(request, 'hybrids/index.html', {'hybrids': hybrids})
 
 @login_required
+def hybrids_index_all(request):
+    hybrids = Hybrid.objects.all()
+    return render(request, 'hybrids/index_all.html', {'hybrids': hybrids})
+
+@login_required
 def hybrids_detail(request, hybrid_id):
     hybrid= Hybrid.objects.get(id=hybrid_id)
     vests_not_owned = Vest.objects.exclude(id__in = hybrid.vests.all().values_list('id'))

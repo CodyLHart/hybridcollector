@@ -23,7 +23,8 @@
             <li><a href="{% url 'vests_create' %}">Add a Vest</a></li>
             <li><a href="{% url 'vests_index' %}">View All Vests</a></li>
             <li><a href="{% url 'hybrids_create' %}">Add a Hybrid</a></li>
-            <li><a href="{% url 'index' %}">View All My Hybrids</a></li>
+            <li><a href="{% url 'index' %}">View My Hybrids</a></li>
+            <li><a href="{% url 'index_all' %}">View All Hybrids</a></li>
             <li><a href="{% url 'logout' %}">Log Out</a></li>
           {% else %}
             <li><a href="{% url 'signup' %}">Sign Up</a></li>
